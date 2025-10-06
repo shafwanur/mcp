@@ -53,6 +53,8 @@ async def test():
     """
     )
 
+    print("Result: ", result)
+
 
 if __name__ == "__main__":
     # Run the appropriate example
