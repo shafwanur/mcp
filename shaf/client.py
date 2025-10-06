@@ -9,15 +9,14 @@ load_dotenv()
 
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 
-
-async def test():
+async def test(query: str):
     mcp_server_config = {
         "mcpServers": {
             "docs": {  # runs locally.
                 "command": "uv",
                 "args": [
                     "--directory",
-                    f"{os.getcwd()}\\docs",
+                    f"{os.getcwd()}\\mcp-tools\\docs",
                     "run",
                     "docs.py",
                 ],
@@ -44,18 +43,21 @@ async def test():
         use_server_manager=False,
         max_steps=30,
     )
+    response = await agent.run(query)
 
-    result = await agent.run(
+    print("Response: ")
+    for item in response: 
+        for key in item: 
+            print(key)
+            print(item[key], end = "\n\n")
+
+
+if __name__ == "__main__":
+    # Run the appropriate example
+    asyncio.run(test(
         """
     Führe bitte folgende Schritte aus:
     1. add two numbers, 33 and 22.
     2. on duckduckgo, find what the capital of chile is, and how big it is. 
     """
-    )
-
-    print("Result: ", result)
-
-
-if __name__ == "__main__":
-    # Run the appropriate example
-    asyncio.run(test())
+    ))
