@@ -1,5 +1,4 @@
 import os
-import dotenv
 import asyncio
 
 from dotenv import load_dotenv
@@ -14,20 +13,22 @@ ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 async def test():
     mcp_server_config = {
         "mcpServers": {
-            "docs": {  # this one runs locally.
-                "command": "C:\\Users\\kazirahman\\.local\\bin\\uv",
+            "docs": {  # runs locally.
+                "command": "uv",
                 "args": [
                     "--directory",
-                    "C:\\Users\\kazirahman\\Documents\\mcp-research-noah\\shaf",
+                    f"{os.getcwd()}\\docs",
                     "run",
                     "docs.py",
                 ],
             },
-            "calculator": {
+            "calculator": {  # runs inside a docker container
                 "command": "docker",
                 "args": ["run", "--rm", "-i", "calculator-mcp-server"],
             },
-            "http": {"url": "http://localhost:8080/mcp"},
+            "http": {  # stellt alle MCP Tools aus dem Docker Katalog auf einmal zur Verfügung.
+                "url": "http://localhost:8080/mcp"
+            },  # for this to work, run this first: docker mcp gateway run --transport streaming --port 8080
         }
     }
 

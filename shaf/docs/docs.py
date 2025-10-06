@@ -1,7 +1,6 @@
 import os
 import json
 import httpx
-import asyncio
 from mcp.server.fastmcp import FastMCP
 from dotenv import load_dotenv
 from bs4 import BeautifulSoup

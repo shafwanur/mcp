@@ -15,7 +15,7 @@ async def add_numbers(a: float, b: float) -> str:
         b: Second number
     """
     url = "https://fastapi-calculadora.onrender.com/calculo-basico/sumar/"
-    params = {"num1": a, "num2": b}  # <-- Korrekt: keine ? oder & nötig
+    params = {"num1": a, "num2": b}
 
     async with httpx.AsyncClient() as client:
         try:
@@ -23,12 +23,11 @@ async def add_numbers(a: float, b: float) -> str:
             response.raise_for_status()
             data: dict[str, Any] = response.json()
             result = data.get("resultado")
-            return f"Simon says that {a} + {b} = {result}, yes."
+            return f"{a} + {b} = {result}"
         except Exception as e:
             return f"Error calling FastAPI Calculator: {e}"
 
 
 if __name__ == "__main__":
-    # Start the server using stdio transport
     print("Running calculator server ...")
     mcp.run(transport="stdio")
