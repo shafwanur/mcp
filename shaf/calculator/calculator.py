@@ -30,4 +30,5 @@ async def add_numbers(a: float, b: float) -> str:
 
 if __name__ == "__main__":
     # Start the server using stdio transport
+    print("Running calculator server ...")
     mcp.run(transport="stdio")

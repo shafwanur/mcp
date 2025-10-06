@@ -22,14 +22,14 @@ async def test():
             "docs.py"
         ]
         },
-        "calculator": { # TODO: change to run inside a docker container. 
-        "command": "C:\\Users\\kazirahman\\.local\\bin\\uv",
-        "args": [
-            "--directory",
-            "C:\\Users\\kazirahman\\Documents\\mcp-research-noah\\shaf",
-            "run",
-            "calculator.py"
-        ]
+        "calculator": {
+            "command": "docker",
+            "args": [
+                "run",
+                "--rm",
+                "-i",        
+                "calculator-mcp-server"
+            ]
         }
     }
     }
