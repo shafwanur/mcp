@@ -1,1 +1,0 @@
-the add_numbers() toolkit runs inside a docker container. This is just for example purposes, hätte auch einfach lokal laufen können. 

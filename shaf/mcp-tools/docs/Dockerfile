@@ -8,6 +8,6 @@ RUN pip install --no-cache-dir . uv
 
 COPY . .
 
-EXPOSE 6969
+EXPOSE 3333
 
-CMD ["uv", "run", "calculator.py", "--mode", "streamable-http"]
+CMD ["uv", "run", "docs.py", "--mode", "streamable-http"]

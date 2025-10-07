@@ -9,20 +9,33 @@ class MCPServerConfig(BaseModel):
 
     mcpServers: Dict[str, Dict[str, Any]] = Field(
         default_factory=lambda: {
-            "docs": {
-                "command": "uv",
-                "args": [
-                    "--directory",
-                    f"{os.getcwd()}\\mcp-tools\\docs",
-                    "run",
-                    "docs.py",
-                ],
-            },
+            # "docs": {
+            #     "command": "uv",
+            #     "args": [
+            #         "--directory",
+            #         f"{os.getcwd()}\\..\\mcp-tools\\docs",
+            #         "run",
+            #         "docs.py",
+            #     ],
+            # },
+            # "calculator": {
+            #     # "command": "docker",
+            #     # "args": ["run", "--rm", "-i", "calculator-mcp-server"],
+            #     "url": "http://localhost:6969"
+            # },
             "calculator": {
-                "command": "docker",
-                "args": ["run", "--rm", "-i", "calculator-mcp-server"],
+                "url": os.environ.get(
+                    "CALCULATOR_MCP_SERVER", "http://localhost:6969/mcp"
+                )
             },
-            "http": {"url": "http://localhost:8080/mcp"},
+            "docs": {
+                "url": os.environ.get("DOCS_MCP_SERVER", "http://localhost:3333/mcp")
+            },
+            "http": {
+                "url": os.environ.get(
+                    "DOCKER_MCP_GATEWAY_URL", "http://localhost:8080/mcp"
+                )
+            },
         },
         description="Dictionary defining the MCP server configuration.",
     )
@@ -55,13 +68,15 @@ class QueryRequest(BaseModel):
     query: str
     mcp_server_config: Optional[MCPServerConfig] = None
     agent_config: Optional[MCPAgentConfig] = None
-    api_key: Optional[str] = None
+    api_key: Optional[str] = (
+        None  # Note: I understand the api_key should probably be passed securely in the header and not in the body, but for this demo example, I'm too lazy to bother with that.
+    )
 
-    # This example for the docs remains unchanged.
+    # The example body shown in swagger.
     model_config = {
         "json_schema_extra": {
             "example": {
-                "query": "Add 33 and 36 together. Also use duckduckgo to find the capital of Chile and its total population."
+                "query": "Answer the following questions: 1. Add 33 and 36 together. 2. Use duckduckgo to find the capital of Chile and its population. 3. Find out how to initialize a chat model using langchain and python."
             }
         }
     }

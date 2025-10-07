@@ -1,0 +1,41 @@
+services:
+  docker-mcp-toolkit:
+    image: docker/mcp-gateway
+    ports:
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "~/.docker/mcp:/mcp"
+    command:
+      - --catalog=/mcp/catalogs/docker-mcp.yaml
+      - --config=/mcp/config.yaml
+      - --registry=/mcp/registry.yaml
+      - --tools-config=/mcp/tools.yaml
+      - --secrets=docker-desktop
+      - --watch=true
+      - --transport=sse
+      - --port=8080
+
+  calculator: 
+    build: 
+      context: mcp-tools/calculator
+      dockerfile: Dockerfile
+    ports: 
+      - "6969:6969"
+
+  docs: 
+    build: 
+      context: mcp-tools/docs
+      dockerfile: Dockerfile
+    ports: 
+      - "3333:3333"
+
+  api: 
+    ports: 
+      - "8000:8000"
+    build: .
+    environment:
+      # this env variable should match the container name for the mcp toolkit as set in this file. 
+      - DOCKER_MCP_GATEWAY_URL=http://docker-mcp-toolkit:8080/mcp
+      - CALCULATOR_MCP_SERVER=http://calculator:6969/mcp
+      - DOCS_MCP_SERVER=http://docs:3333/mcp

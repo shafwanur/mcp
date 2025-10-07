@@ -5,9 +5,11 @@ from mcp.server.fastmcp import FastMCP
 from dotenv import load_dotenv
 from bs4 import BeautifulSoup
 
+from fastapi import FastAPI
+
 load_dotenv()
 
-mcp = FastMCP("docs")  # the docs mcp
+mcp = FastMCP("docs", stateless_http=True, host="0.0.0.0", port=3333)
 
 USER_AGENT = "docs-app/1.0"
 SERPER_URL = "https://google.serper.dev/search"
@@ -79,5 +81,12 @@ async def get_docs(query: str, library: str):
     return text
 
 
+app = FastAPI(title="Docs", lifespan=lambda app: mcp.session_manager.run())
+app.mount("/docs", mcp.streamable_http_app())
+
 if __name__ == "__main__":
-    mcp.run(transport="stdio")
+    print("Running docs server ...")
+    mcp.run(transport="streamable-http")
+
+
+# Read: https://heeki.medium.com/building-an-mcp-server-as-an-api-developer-cfc162d06a83, with the exception that it needs to listen on 0.0.0.0 to allow communication within the docker network
