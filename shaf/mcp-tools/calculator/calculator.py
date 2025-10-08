@@ -37,4 +37,7 @@ if __name__ == "__main__":
     mcp.run(transport="streamable-http")
 
 
-# Read: https://heeki.medium.com/building-an-mcp-server-as-an-api-developer-cfc162d06a83, with the exception that it needs to listen on 0.0.0.0 to allow communication within the docker network
+"""
+Read: https://heeki.medium.com/building-an-mcp-server-as-an-api-developer-cfc162d06a83
+Required changes from the blog: change host 0.0.0.0 to allow communication within the docker network
+"""

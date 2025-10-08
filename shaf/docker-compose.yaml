@@ -1,5 +1,6 @@
 services:
   docker-mcp-toolkit:
+    # https://github.com/docker/mcp-gateway/blob/main/examples/mcp_toolkit/compose.yaml
     image: docker/mcp-gateway
     ports:
       - "8080:8080"
@@ -35,7 +36,7 @@ services:
       - "8000:8000"
     build: .
     environment:
-      # this env variable should match the container name for the mcp toolkit as set in this file. 
+      # the env variables here should match the container names eins-zu-eins 
       - DOCKER_MCP_GATEWAY_URL=http://docker-mcp-toolkit:8080/mcp
       - CALCULATOR_MCP_SERVER=http://calculator:6969/mcp
       - DOCS_MCP_SERVER=http://docs:3333/mcp

@@ -24,17 +24,13 @@ class MCPServerConfig(BaseModel):
             #     "url": "http://localhost:6969"
             # },
             "calculator": {
-                "url": os.environ.get(
-                    "CALCULATOR_MCP_SERVER", "http://localhost:6969/mcp"
-                )
+                "url": os.environ.get("CALCULATOR_MCP_SERVER", "http://localhost:6969/mcp")
             },
             "docs": {
                 "url": os.environ.get("DOCS_MCP_SERVER", "http://localhost:3333/mcp")
             },
             "http": {
-                "url": os.environ.get(
-                    "DOCKER_MCP_GATEWAY_URL", "http://localhost:8080/mcp"
-                )
+                "url": os.environ.get("DOCKER_MCP_GATEWAY_URL", "http://localhost:8080/mcp")
             },
         },
         description="Dictionary defining the MCP server configuration.",

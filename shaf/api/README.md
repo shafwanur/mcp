@@ -1,31 +1,7 @@
-### Example Request Body 
+## File Structure
 
-Feel free to add / remove tools depending on your local environment and see how it changes the behavior.  
+* `models.py` holds all the **Pydantic models**. It defines the data shapes and validation rules, currently just for incoming requests.  
 
-```json
-{
-  "query": "Add 2 and 5 together and tell me the answer. Later, let me know what the temperature in Deggendorf is.",
-  "mcp_server_config": {
-    "mcpServers": {
-      "docs": {
-        "command": "uv",
-        "args": [
-          "--directory",
-          "C:\\Users\\kazirahman\\Documents\\mcp-research-noah\\shaf\\mcp-tools\\docs",
-          "run",
-          "docs.py"
-        ]
-      },
-      "calculator": {
-        "command": "docker",
-        "args": [
-          "run",
-          "--rm",
-          "-i",
-          "calculator-mcp-server"
-        ]
-      }
-    }
-  }
-}
-```
+* `helpers.py` contains the core **business logic** for the API endpoints.
+
+* `routes.py` defines all the **API endpoints** (routes). Handles incoming HTTP requests, calling the appropriate helper functions from `helpers.py`, and returning the final response. 
